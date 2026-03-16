@@ -1,0 +1,59 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Automated Data Sync: Fetch updates from data.gov.pk
+# Runs daily at 02:00 UTC. Also triggerable manually.
+# Commits updated catalogue JSON and triggers a new site deploy.
+# ──────────────────────────────────────────────────────────────────────────────
+
+name: Sync Data from data.gov.pk
+
+on:
+  schedule:
+    - cron: '0 2 * * *'   # Every day at 02:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    name: Fetch & Update Datasets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: pip install requests python-dateutil
+
+      - name: Run data sync script
+        run: python scripts/sync_datasets.py
+        env:
+          DATA_GOV_PK_API: ${{ secrets.DATA_GOV_PK_API || 'https://data.gov.pk' }}
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git diff --quiet src/data/ || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit updated dataset catalogue
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name  "Pakistan Open Data Bot"
+          git config user.email "bot@opendata.gov.pk"
+          git add src/data/
+          git commit -m "chore: auto-sync datasets from data.gov.pk [$(date -u '+%Y-%m-%d')]"
+          git push
+
+      - name: Trigger deploy workflow
+        if: steps.changes.outputs.changed == 'true'
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: deploy.yml
+          token: ${{ secrets.GITHUB_TOKEN }}
