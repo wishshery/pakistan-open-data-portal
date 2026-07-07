@@ -25,7 +25,7 @@ function NotFound() {
 
 export default function App() {
   return (
-    <BrowserRouter basename="/pakistan-open-data-portal">
+    <BrowserRouter>
       <div className="min-h-screen flex flex-col">
         <Header />
         <main className="flex-1">
