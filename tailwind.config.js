@@ -24,10 +24,12 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['Lexend', 'Inter', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
-        card:      '0 2px 8px rgba(0,0,0,0.08)',
-        cardHover: '0 8px 24px rgba(0,0,0,0.14)',
+        card:      '0 1px 3px rgba(10,22,40,0.06), 0 4px 14px rgba(10,22,40,0.05)',
+        cardHover: '0 12px 32px rgba(0,104,55,0.14), 0 2px 8px rgba(10,22,40,0.08)',
+        glow:      '0 0 40px rgba(0,138,73,0.35)',
       }
     },
   },
