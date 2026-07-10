@@ -4,13 +4,16 @@
 
 @layer base {
   html  { scroll-behavior: smooth; }
+  h1,h2,h3,h4,h5 { font-family: 'Lexend','Inter',system-ui,sans-serif; letter-spacing: -0.015em; }
+  :focus-visible { outline: 3px solid #008a49; outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *,*::before,*::after { animation-duration:.01ms !important; transition-duration:.01ms !important; } }
   body  { @apply text-gray-800 bg-white font-sans; }
   *     { box-sizing: border-box; }
 }
 
 @layer components {
   /* Buttons */
-  .btn-primary  { @apply inline-flex items-center gap-2 bg-pak-green hover:bg-pak-greenDark text-white font-semibold px-5 py-2.5 rounded-md transition-colors duration-200 cursor-pointer; }
+  .btn-primary  { @apply inline-flex items-center gap-2 bg-pak-green hover:bg-pak-greenDark text-white font-semibold px-5 py-2.5 rounded-lg shadow-sm hover:shadow-glow transition-all duration-200 cursor-pointer; }
   .btn-outline  { @apply inline-flex items-center gap-2 border-2 border-pak-green text-pak-green hover:bg-pak-greenPale font-semibold px-5 py-2.5 rounded-md transition-colors duration-200 cursor-pointer; }
   .btn-ghost    { @apply inline-flex items-center gap-2 text-pak-green hover:bg-pak-greenPale font-medium px-4 py-2 rounded-md transition-colors duration-200 cursor-pointer; }
 
@@ -24,7 +27,7 @@
   .tag-unavail  { @apply tag bg-orange-50 text-orange-700; }
 
   /* Cards */
-  .card         { @apply bg-white rounded-xl border border-gray-200 shadow-card hover:shadow-cardHover transition-all duration-200; }
+  .card         { @apply bg-white rounded-xl border border-gray-200 shadow-card hover:shadow-cardHover hover:-translate-y-0.5 transition-all duration-200; }
   .card-inner   { @apply p-5; }
 
   /* Typography helpers */
