@@ -44,28 +44,38 @@ const pillars = [
 export default function Home() {
   return (
     <div>
-      {/* ── HERO ───────────────────────────────────────────────────────────── */}
+      {/* ── HERO ───────────────────────────────────────────────────── */}
       <section
-        className="relative bg-pak-green overflow-hidden"
-        style={{ backgroundImage: 'radial-gradient(ellipse at top right, #008a49 0%, #006837 45%, #004d28 100%)' }}
+        className="relative overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, #003d20 0%, #006837 42%, #007a41 72%, #005c30 100%)' }}
       >
-        {/* Decorative pattern */}
-        <div className="absolute inset-0 opacity-5"
-          style={{ backgroundImage: 'repeating-linear-gradient(45deg, white 0, white 1px, transparent 0, transparent 50%)', backgroundSize: '20px 20px' }} />
+        {/* Subtle grid */}
+        <div className="absolute inset-0 opacity-[0.06]"
+          style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
+        {/* Glow orbs */}
+        <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(circle, rgba(245,200,66,0.18) 0%, transparent 65%)' }} />
+        <div className="absolute -bottom-32 left-1/4 w-[28rem] h-[28rem] rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(circle, rgba(0,138,73,0.5) 0%, transparent 65%)' }} />
+        {/* Crescent & star watermark */}
+        <svg className="absolute right-[-40px] top-1/2 -translate-y-1/2 w-[340px] h-[340px] opacity-10 pointer-events-none hidden lg:block" viewBox="0 0 100 100" fill="white" aria-hidden="true">
+          <path d="M62 10a40 40 0 1 0 0 80 44 44 0 0 1-18-80 40 40 0 0 1 18 0Z"/>
+          <path d="M74 32l3.6 9.2 9.9.5-7.7 6.2 2.6 9.6-8.4-5.4-8.4 5.4 2.6-9.6-7.7-6.2 9.9-.5Z"/>
+        </svg>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-20">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 md:pt-24 pb-24 md:pb-32">
           <div className="max-w-3xl">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-white/15 text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-white/25 mb-6">
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white text-xs font-semibold px-3.5 py-1.5 rounded-full border border-white/20 mb-7">
               <span className="w-2 h-2 bg-pak-goldLight rounded-full animate-pulse" />
               Official Pakistan Open Data Portal
             </div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight mb-4">
+            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-[1.08] mb-5">
               Find and use open data<br />
-              <span className="text-pak-goldLight">from Pakistan's public bodies</span>
+              <span className="text-pak-goldLight">from Pakistan’s public bodies</span>
             </h1>
-            <p className="text-white/80 text-base md:text-lg mb-8 max-w-xl leading-relaxed">
+            <p className="text-white/85 text-base md:text-lg mb-9 max-w-xl leading-relaxed">
               Access hundreds of datasets from federal ministries, provincial governments, regulatory authorities,
               and public institutions — free for use by everyone.
             </p>
@@ -73,16 +83,19 @@ export default function Home() {
             <SearchBar large />
           </div>
         </div>
+
+        {/* Bottom fade into stats */}
+        <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-b from-transparent to-black/10 pointer-events-none" />
       </section>
 
-      {/* ── STATS ──────────────────────────────────────────────────────────── */}
-      <section className="bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      {/* ── STATS (overlapping hero) ────────────────────────────── */}
+      <section className="relative z-10 -mt-14 md:-mt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {stats.map(({ value, label, icon: Icon, color }) => (
-              <div key={label} className="stat-card">
-                <Icon size={22} className={`${color} mx-auto mb-2`} />
-                <div className="text-2xl font-extrabold text-pak-navy">{value}</div>
+              <div key={label} className="bg-white/95 backdrop-blur rounded-xl p-6 border border-gray-100 shadow-cardHover text-center">
+                <Icon size={22} className={`${color} mx-auto mb-2`} aria-hidden="true" />
+                <div className="font-display text-2xl md:text-3xl font-bold text-pak-navy tabular-nums">{value}</div>
                 <div className="text-xs text-gray-500 font-medium mt-0.5">{label}</div>
               </div>
             ))}
@@ -218,7 +231,7 @@ export default function Home() {
               <Zap size={16} /> View API Docs
             </Link>
             <a
-              href="https://github.com/your-org/pakistan-open-data-portal"
+              href="https://github.com/wishshery/pakistan-open-data-portal"
               target="_blank" rel="noreferrer"
               className="btn-outline border-white text-white hover:bg-white/10"
             >
